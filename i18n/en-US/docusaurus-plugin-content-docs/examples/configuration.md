@@ -1,0 +1,649 @@
+---
+sidebar_position: 1
+---  
+# Configuration
+This chapter will introduce how to use configuration options.  
+
+## Introduction  
+Configuration is one of the key elements to start the entire Go-Sail service. It determines how Go-Sail works.  
+
+Previously, we mentioned the quickest way to start Go-Sail, which is shown in the code below:  
+```go title="main.go" showLineNumbers  
+import (
+    "net/http"
+    "github.com/gin-gonic/gin"
+    "github.com/keepchen/go-sail/v3/sail"
+    "github.com/keepchen/go-sail/v3/sail/config"
+)
+
+var (
+    conf = &config.Config{}
+    registerRoutes = func(ginEngine *gin.Engine) {
+        ginEngine.GET("/hello", func(c *gin.Context){
+            c.String(http.StatusOK, "%s", "hello, world!")
+        })
+    }
+)
+
+func main() {
+    sail.WakeupHttp("go-sail", conf).Hook(registerRoutes, nil, nil).Launch()
+}
+```  
+The code above does the following:  
+- 1.Start the Go-Sail service with minimal configuration  
+- 2.All configuration options use the framework's default settings  
+- 3.Register a route handler function with the path `/hello`  
+
+Go-Sail's configuration can be broadly divided into two categories: HTTP service configuration and component library configuration. Let's explore how to use each of them.  
+
+## HTTP Service  
+HTTP service configuration includes options for enabling DEBUG mode, service listening address, Swagger documentation, Prometheus, and Websocket.  
+Now, let's explore these configuration options in more detail.  
+
+### Listening and Debugging  
+#### HTTP Service  
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+)
+
+var (
+    conf = &config.Config{
+        // highlight-start
+        Debug: true,
+        Addr: ":8000",
+        // highlight-end
+    }
+    ...
+)
+
+...
+```  
+It's worth noting the scope of what the DEBUG configuration option affects:  
+- When set to true, Gin will start in debug mode; otherwise, it will start in release mode without colored terminal output.  
+- When set to true, pprof profiling will be enabled; otherwise, it will be disabled.  
+- When set to true, an additional route handler function with the path `/go-sail` will be registered; otherwise, it will not be registered.  
+
+:::warning  
+We **strongly recommend** setting `Debug` to `false` in production environments!  
+:::  
+#### WebSocket Service  
+WebSocket service is optional and can be enabled when needed. Through the configuration below, you can specify the route path for client connections to the WebSocket service.  
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+)
+
+var (
+    conf = &config.Config{
+        
+        Debug: true,
+        Addr: ":8000",
+        Swagger: config.SwaggerConf{
+            Enable: true,
+            RedocUIPath: "...",
+            JsonPath: "",
+            FaviconPath: "",
+        },
+        Prometheus: config.PrometheusConf{
+            ...
+        },
+        // highlight-start
+        WebSocketRotePath: "/notification/push",
+        // highlight-end
+    }
+    ...
+)
+
+...
+```  
+At the same time, you need to specify starting the WebSocket service when launching the framework, like this:  
+```go title="main.go" showLineNumbers  
+import (
+    "net/http"
+    "github.com/gin-gonic/gin"
+    "github.com/keepchen/go-sail/v3/sail"
+    "github.com/keepchen/go-sail/v3/sail/config"
+)
+
+var (
+    conf = &config.Config{}
+    registerRoutes = func(ginEngine *gin.Engine) {
+        ginEngine.GET("/hello", func(c *gin.Context){
+            c.String(http.StatusOK, "%s", "hello, world!")
+        })
+    }
+)
+
+func main() {
+    sail.WakeupHttp("go-sail", conf).
+    // highlight-start
+    EnableWebsocket(nil, nil).
+    // highlight-end
+    Hook(registerRoutes, nil, nil).
+    Launch()
+}
+```  
+This way, the default WebSocket service has been successfully started.  
+:::tip  
+The default WebSocket service only prints messages sent by clients without performing any other operations. Therefore, you need to specify the parameters of the `EnableWebsocket` method to customize connection logic and handling functions.  
+:::
+
+### Swagger  
+Whether Swagger is enabled is controlled under the `config.SwaggerConf` configuration. This design provides developers with more fine-grained control, allowing you to individually choose whether to enable it or not.  
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+)
+
+var (
+    conf = &config.Config{
+        
+        Debug: true,
+        Addr: ":8000",
+        // highlight-start
+        Swagger: config.SwaggerConf{
+            Enable: true,
+            RedocUIPath: "...",
+            JsonPath: "...",
+            FaviconPath: "...",
+        },
+        // highlight-end
+        Prometheus: config.PrometheusConf{
+            ...
+        },
+        WebSocketRotePath: "...",
+    }
+    ...
+)
+
+...
+```  
+
+#### RedocUIPath  
+`RedocUIPath` specifies the path to the HTML file generated by the Redocly documentation tool. When correctly specified, Go-Sail will manage the routing for the Redocly documentation UI, and after startup, you can find them directly in the terminal output information.  
+:::tip  
+Redocly is an excellent third-party documentation UI generation tool that provides a command-line interface to quickly generate HTML files directly from OpenAPI-compliant YAML files.  
+
+> Assuming
+> Your YAML file path is **pkg/app/ucenter/docs/*.yaml**, and the final generated HTML path is **pkg/app/ucenter/docs/apidoc.html**  
+
+After running the command below, you will get an HTML file in Redocly UI style.  
+```shell  
+redocly build-docs pkg/app/ucenter/docs/*.yaml -o pkg/app/ucenter/docs/apidoc.html  
+```  
+
+At this point, simply set `RedocUIPath` to **pkg/app/ucenter/docs/apidoc.html**.  
+:::  
+
+#### JsonPath  
+`JsonPath` specifies the path to the JSON file required by Swagger UI.  
+Following the example above, simply set `JsonPath` to **pkg/app/ucenter/docs/swagger.json**.  
+
+#### FaviconPath  
+`FaviconPath` provides the path to the browser tab favicon. This configuration becomes useful when your documentation needs to be public and brand image is important. Of course, it's fine if you don't configure it - Go-Sail will display the framework's own logo as the favicon.  
+
+### Prometheus  
+Whether Prometheus is enabled is configured under `config.PrometheusConf`. This design provides developers with more fine-grained control, allowing you to individually choose whether to enable it or not.  
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+)
+
+var (
+    conf = &config.Config{
+        
+        Debug: true,
+        Addr: ":8000",
+        
+        Swagger: config.SwaggerConf{
+            Enable: true,
+            RedocUIPath: "...",
+            JsonPath: "",
+            FaviconPath: "",
+        },
+        // highlight-start
+        Prometheus: config.PrometheusConf{
+            Enable: true,
+            Addr: ":8001",
+            AccessPath: "/metrics",
+            DisableSystemSample: false,
+            DiskPath: "/data",
+            SampleInterval: "30s",
+        },
+        // highlight-end
+        WebSocketRotePath: "...",
+    }
+    ...
+)
+
+...
+```  
+The configuration above specifies that Prometheus metrics collection should be enabled, listening on port `8001` with access path `/metrics`. System metrics sampling is enabled, disk usage sampling collects data from the `/data` directory, and the system sampling interval is set to `30 seconds`.  
+:::tip  
+Note that Prometheus runs as a separate HTTP service, so you need to configure a different port from your business service. This design enables better access control - for example, your business service can be publicly accessible while metrics collection remains private and only accessible to internal services.  
+:::  
+
+## Component Libraries  
+Each component library has a separate `Enable` configuration item to control whether the component is enabled. If set to `true`, Go-Sail will attempt to initialize according to the configuration during startup.  
+:::tip  
+As mentioned earlier, component libraries generally provide access in a singleton pattern, so component configurations do not support hot reloading unless specifically noted.  
+:::  
+:::warning  
+Note that if you enable a component but its initialization fails (for example, due to database connection failure), the service will terminate and exit.  
+:::  
+
+### Logger  
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+    // highlight-start
+    "github.com/keepchen/go-sail/lib/logger"
+    // highlight-end
+)
+
+var (
+    conf = &config.Config{
+        ...
+        // highlight-start
+        LoggerConf: logger.Conf{
+            ...
+        },
+        // highlight-end
+        ...
+    }
+    ...
+)
+
+...
+```  
+
+:::tip  
+Note that Logger's exporters currently support Redis (standalone and cluster modes), Nats, and Kafka.  
+If exporters are enabled, their connection instances are independent and unrelated to the instances obtained using `sail.GetXX`.  
+:::
+
+### Database    
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+    // highlight-start
+    "github.com/keepchen/go-sail/lib/db"
+    // highlight-end
+)
+
+var (
+    conf = &config.Config{
+        ...
+        // highlight-start
+        DBConf: db.Conf{
+            ...
+        },
+        // highlight-end
+        ...
+    }
+    ...
+)
+
+...
+```  
+
+### Redis   
+#### Standalone Instance  
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+    // highlight-start
+    "github.com/keepchen/go-sail/lib/redis"
+    // highlight-end
+)
+
+var (
+    conf = &config.Config{
+        ...
+        // highlight-start
+        RedisConf: redis.Conf{
+            ...
+        },
+        // highlight-end
+        ...
+    }
+    ...
+)
+
+...
+```  
+#### Cluster Mode  
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+    // highlight-start
+    "github.com/keepchen/go-sail/lib/redis"
+    // highlight-end
+)
+
+var (
+    conf = &config.Config{
+        ...
+        // highlight-start
+        RedisClusterConf: redis.ClusterConf{
+            ...
+        },
+        // highlight-end
+        ...
+    }
+    ...
+)
+
+...
+```  
+### Nats  
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+    // highlight-start
+    "github.com/keepchen/go-sail/lib/nats"
+    // highlight-end
+)
+
+var (
+    conf = &config.Config{
+        ...
+        // highlight-start
+        NatsConf: nats.Conf{
+            ...
+        },
+        // highlight-end
+        ...
+    }
+    ...
+)
+
+...
+```  
+### Email    
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+    // highlight-start
+    "github.com/keepchen/go-sail/lib/email"
+    // highlight-end
+)
+
+var (
+    conf = &config.Config{
+        ...
+        // highlight-start
+        EmailConf: email.Conf{
+            ...
+        },
+        // highlight-end
+        ...
+    }
+    ...
+)
+
+...
+```  
+### Kafka    
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+    // highlight-start
+    "github.com/keepchen/go-sail/lib/kafka"
+    // highlight-end
+)
+
+var (
+    conf = &config.Config{
+        ...
+        // highlight-start
+        KafkaConf: kafka.Conf{
+            ...
+        },
+        // highlight-end
+        ...
+    }
+    ...
+)
+
+...
+```  
+### Etcd    
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+    // highlight-start
+    "github.com/keepchen/go-sail/lib/etcd"
+    // highlight-end
+)
+
+var (
+    conf = &config.Config{
+        ...
+        // highlight-start
+        EtcdConf: etcd.Conf{
+            ...
+        },
+        // highlight-end
+        ...
+    }
+    ...
+)
+
+...
+```  
+### Jwt    
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+    // highlight-start
+    "github.com/keepchen/go-sail/lib/jwt"
+    // highlight-end
+)
+
+var (
+    conf = &config.Config{
+        ...
+        // highlight-start
+        JwtConf: jwt.Conf{
+            ...
+        },
+        // highlight-end
+        ...
+    }
+    ...
+)
+
+...
+```  
+
+## Parsing  
+In actual usage scenarios, configuration items are not hardcoded one by one. Generally, they are read and parsed through other means such as Nacos, Etcd, or even files. In the config package, Go-Sail provides developers with simple parsing methods that they can use selectively. Currently, Go-Sail supports three popular formats: `yaml`, `toml`, and `json`.  
+### Default Template  
+When your project is brand new and doesn't have any configuration files yet, Go-Sail provides functionality to print default configurations and output them to files, allowing you to quickly obtain a configuration file template.  
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+)
+
+func main() {
+    //format: json
+    config.PrintTemplateConfig("json", "path/to/config.json")
+    //format: yaml
+    config.PrintTemplateConfig("yaml", "path/to/config.yaml")
+    //format: toml
+    config.PrintTemplateConfig("toml", "path/to/config.toml")
+}
+```  
+### Parse from Source String  
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/sail/config"
+)
+
+func main() {
+    //json
+    conf, err := config.ParseConfigFromBytes("json", sourceBytes)
+    //yaml
+    conf, err := config.ParseConfigFromBytes("yaml", sourceBytes)
+    //toml
+    conf, err := config.ParseConfigFromBytes("toml", sourceBytes)
+}
+```  
+### Parse from Etcd  
+If you use [Etcd](https://etcd.io/), Go-Sail provides convenient methods to help you read and monitor configuration information from the Etcd configuration center.  
+
+```go title="main.go" showLineNumbers  
+import (
+    "context"
+    "github.com/keepchen/go-sail/v3/lib/etcd"
+    "github.com/keepchen/go-sail/v3/sail/config"
+)
+
+func main() {
+    conf := etcd.Conf{
+        ...
+    }
+    etcd.Init(conf)
+
+    //get key-value
+    etcd.GetInstance().KV.Get()
+
+    //watch key-value
+    callback := func(k, v []byte()) {
+        ...
+    }
+    ctx := context.Background()
+    etcd.Watch(ctx, "key", callback)
+}
+```  
+### Parse from Nacos  
+If you use [Nacos](https://nacos.io), Go-Sail provides convenient methods to help you read and monitor configuration information from the Nacos configuration center.  
+
+```go title="main.go" showLineNumbers  
+import (
+    "github.com/keepchen/go-sail/v3/lib/nacos"
+    "github.com/keepchen/go-sail/v3/sail/config"
+)
+
+func main() {
+    nacos.InitClient("appName", "nacos endpoints", "nacos namespace id")
+
+    var conf = &config.Config{}
+
+    //get config and parse config to go struct
+    err = nacos.GetConfig("group", "dataID", conf, "yaml")
+
+    callback := func(namespace, group, dataId, data string) {
+        err := nacos.ParseConfig([]byte(data), conf, "yaml")
+        if err != nil {
+            fmt.Printf("<Nacos> listen config {%s:%s} change,but can't be unmarshal: %s\n", group, dataId, err.Error())
+            return
+        }
+    }
+
+    //listening config if it changed
+    err = nacos.ListenConfigWithCallback(group, dataID, callback)
+    if err != nil {
+        panic(err)
+    }
+}
+```  
+## Nested Composition  
+The Go-Sail configuration file only contains the necessary configuration items for the framework itself. In actual projects, there are often other business-related configuration items. Therefore, we need to compose or nest configuration items to meet actual requirements.  
+例如：  
+### Named Composition  
+```go title="main.go" showLineNumbers  
+import (
+    sailConfig "github.com/keepchen/go-sail/v3/sail/config"
+)
+
+type GlobalConfigNamed struct {
+    AppName  string            `yaml:"appName" json:"appName" toml:"appName"`
+    Debug    bool              `yaml:"debug" json:"debug" toml:"debug"`
+    // highlight-start
+    SailConf sailConfig.Config `yaml:"sailConf" json:"sailConf" toml:"sailConf"` //tag is necessary
+    // highlight-end
+    ...
+}
+```  
+### Anonymous Composition  
+:::warning  
+It's important to note that while Go allows anonymous struct composition to achieve field promotion, generally speaking, standard json, yaml, and toml packages do not support deserialization of anonymous composition. Therefore, the anonymous composition method cannot directly use parsing libraries to parse configuration into structs.  
+:::  
+```go title="main.go" showLineNumbers  
+import (
+    sailConfig "github.com/keepchen/go-sail/v3/sail/config"
+)
+
+type GlobalConfigAnonymous struct {
+    AppName  string            `yaml:"appName" json:"appName" toml:"appName"`
+    Debug    bool              `yaml:"debug" json:"debug" toml:"debug"`
+    // highlight-start
+    sailConfig.Config
+    // highlight-end
+    ...
+}
+```  
+For example, parsing operations like this will not work:  
+```go title="main.go" showLineNumbers  
+import (
+    "fmt"
+    "encoding/json"
+)
+
+func main() {
+    var conf GlobalConfigAnonymous
+    err := json.Unmarshal(sourceBytes, &conf)
+
+    //this code will output empty
+    fmt.Println(conf.HttpServer.Addr)
+}
+```  
+:::tip  
+If you want to use anonymous composition while ensuring proper configuration parsing, you need to add tags to the anonymous fields.  
+:::  
+```go title="main.go" showLineNumbers  
+import (
+    sailConfig "github.com/keepchen/go-sail/v3/sail/config"
+)
+
+type GlobalConfigAnonymous struct {
+    AppName  string            `yaml:"appName" json:"appName" toml:"appName"`
+    Debug    bool              `yaml:"debug" json:"debug" toml:"debug"`
+    // highlight-start
+    sailConfig.Config          `yaml:",inline" json:",inline" toml:",inline"`
+    // highlight-end
+    ...
+}
+```  
+Now it can be parsed normally:  
+```go title="main.go" showLineNumbers  
+import (
+    "fmt"
+    "encoding/json"
+    "gopkg.in/yaml.v3"
+    "github.com/pelletier/go-toml/v2"
+)
+
+func main() {
+    var conf GlobalConfigAnonymous
+    //json
+    err := json.Unmarshal(sourceBytes, &conf)
+    //yaml
+    err := yaml.Unmarshal(soruceBytes, &conf)
+    //toml
+    err := toml.Unmarshal(sourceBytes, &conf)
+
+    fmt.Println(conf.HttpServer.Addr)
+}
+```  
+:::tip  
+Some third-party libraries support expanding anonymous fields by default, such as `BurntSushi/toml`, but this is not a universal behavior. For consistency, it is recommended to add tags to anonymous fields when using anonymous composition.  
+:::  
+
+### Suggestion  
+:::tip  
+To avoid field ambiguity or conflicts, we recommend that developers use named composition to organize configuration structures.  
+:::

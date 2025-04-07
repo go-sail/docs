@@ -1,0 +1,8 @@
+{
+  "label": "最佳实践",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "将Go-Sail用于真实的项目之中。"
+  }
+}

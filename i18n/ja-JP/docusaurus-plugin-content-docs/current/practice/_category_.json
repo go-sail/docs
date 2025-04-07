@@ -1,0 +1,8 @@
+{
+  "label": "実践",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Go-Sailを実際のプロジェクトで使用する方法。"
+  }
+}

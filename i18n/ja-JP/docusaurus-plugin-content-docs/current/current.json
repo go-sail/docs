@@ -1,0 +1,38 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.コンセプト": {
+    "message": "コンセプト",
+    "description": "The label for category 概要 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.コンセプト.link.generated-index.description": {
+    "message": "Go-Sailの核心概念。",
+    "description": "The generated-index page description for category 概要 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.使用例": {
+    "message": "使用例",
+    "description": "The label for category 使用例 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.使用例.link.generated-index.description": {
+    "message": "Go-Sailの様々な使用例を集中展示します。",
+    "description": "The generated-index page description for category 使用例 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.実践": {
+    "message": "実践",
+    "description": "The label for category 実践 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.実践.link.generated-index.description": {
+    "message": "実践的なチュートリアルと例",
+    "description": "The generated-index page description for category 実践 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.実践例": {
+    "message": "実践例",
+    "description": "The label for category 実践例 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.実践例.link.generated-index.description": {
+    "message": "Go-Sailを実際のプロジェクトに適用します。",
+    "description": "The generated-index page description for category 実践例 in sidebar tutorialSidebar"
+  }
+}

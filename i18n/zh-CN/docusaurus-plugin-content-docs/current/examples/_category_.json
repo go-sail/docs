@@ -1,0 +1,8 @@
+{
+  "label": "使用示例",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "集中展示Go-Sail的各种使用示例。"
+  }
+}

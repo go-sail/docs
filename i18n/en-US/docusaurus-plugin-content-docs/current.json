@@ -1,0 +1,38 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Concepts": {
+    "message": "Concepts",
+    "description": "The label for category Concepts in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Concepts.link.generated-index.description": {
+    "message": "Core concepts of Go-Sail.",
+    "description": "The generated-index page description for category Concepts in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Examples": {
+    "message": "Examples",
+    "description": "The label for category Examples in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Examples.link.generated-index.description": {
+    "message": "Showcase of Go-Sail's various examples.",
+    "description": "The generated-index page description for category Examples in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Advanced": {
+    "message": "Advanced",
+    "description": "The label for category Advanced in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Advanced.link.generated-index.description": {
+    "message": "Advanced tutorials and examples",
+    "description": "The generated-index page description for category Advanced in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Best Practices": {
+    "message": "Best Practices",
+    "description": "The label for category Best Practices in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.最佳实践.link.generated-index.description": {
+    "message": "Apply Go-Sail to real projects.",
+    "description": "The generated-index page description for category Best Practices in sidebar tutorialSidebar"
+  }
+}
