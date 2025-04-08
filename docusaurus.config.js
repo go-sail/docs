@@ -54,6 +54,30 @@ const config = {
     },
   },
 
+  plugins: [
+    [
+      '@docusaurus/plugin-sitemap',
+      {
+        id: 'sitemap',
+        // 核心配置：覆盖默认生成逻辑
+        createSitemapItems: async (params) => {
+          const defaultSitemapItems = await params.defaultCreateSitemapItems(params);
+          const { siteConfig } = params;
+          
+          // 生成多语言路径
+          return defaultSitemapItems.flatMap((item) => {
+            return siteConfig.i18n.locales.map((locale) => ({
+              ...item,
+              url: `${siteConfig.url}/${locale}${item.url.replace(siteConfig.url, '')}`.endsWith('/') ? `${siteConfig.url}/${locale}${item.url.replace(siteConfig.url, '')}` : `${siteConfig.url}/${locale}${item.url.replace(siteConfig.url, '')}/`, //`${siteConfig.url}/${locale}${item.url.replace(siteConfig.baseUrl, '')}`,
+              changefreq: 'weekly',
+              priority: 0.9,
+            }));
+          });
+        },
+      },
+    ],
+  ],
+
   presets: [
     [
       'classic',
@@ -77,21 +101,21 @@ const config = {
           // lastVersion: 'current',
           // onlyIncludeVersions: ['current', 'v3'],
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/go-sail/docs/',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
-        },
+        // blog: {
+        //   showReadingTime: true,
+        //   feedOptions: {
+        //     type: ['rss', 'atom'],
+        //     xslt: true,
+        //   },
+        //   // Please change this to your repo.
+        //   // Remove this to remove the "edit this page" links.
+        //   editUrl:
+        //     'https://github.com/go-sail/docs/',
+        //   // Useful options to enforce blogging best practices
+        //   onInlineTags: 'warn',
+        //   onInlineAuthors: 'warn',
+        //   onUntruncatedBlogPosts: 'warn',
+        // },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -185,6 +209,38 @@ const config = {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+      },
+      algolia: {
+        // The application ID provided by Algolia
+        appId: 'EJ7ONRKD8Y',
+  
+        // Public API key: it is safe to commit it
+        apiKey: 'c372d3e28150ce1a956e6a0c469cf265',
+  
+        indexName: 'go_sail_dev_ej7onrkd8y_pages',
+  
+        // Optional: see doc section below
+        contextualSearch: true,
+  
+        // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+        externalUrlRegex: 'go-sail\\.dev',
+  
+        // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs
+        replaceSearchResultPathname: {
+          from: '/docs/', // or as RegExp: /\/docs\//
+          to: '/',
+        },
+  
+        // Optional: Algolia search parameters
+        searchParameters: {},
+  
+        // Optional: path for search page that enabled by default (`false` to disable it)
+        searchPagePath: 'search',
+  
+        // Optional: whether the insights feature is enabled or not on Docsearch (`false` by default)
+        insights: false,
+  
+        //... other Algolia params
       },
     }),
 };
