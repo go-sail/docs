@@ -1,0 +1,38 @@
+{
+  "version.label": {
+    "message": "下一个",
+    "description": "当前版本的标签"
+  },
+  "sidebar.tutorialSidebar.category.Concepts": {
+    "message": "概念",
+    "description": "侧边栏教程中的概念类别标签"
+  },
+  "sidebar.tutorialSidebar.category.Concepts.link.generated-index.description": {
+    "message": "Go-Sail的核心概念",
+    "description": "侧边栏教程中的概念类别标签的索引页面描述"
+  },
+  "sidebar.tutorialSidebar.category.Examples": {
+    "message": "示例",
+    "description": "侧边栏教程中的示例类别标签"
+  },
+  "sidebar.tutorialSidebar.category.Examples.link.generated-index.description": {
+    "message": "Go-Sail的各种示例",
+    "description": "侧边栏教程中的示例类别标签的索引页面描述"
+  },
+  "sidebar.tutorialSidebar.category.Advanced": {
+    "message": "进阶",
+    "description": "侧边栏教程中的进阶类别标签"
+  },
+  "sidebar.tutorialSidebar.category.Advanced.link.generated-index.description": {
+    "message": "高级教程和示例",
+    "description": "侧边栏教程中的高级类别标签的索引页面描述"
+  },
+  "sidebar.tutorialSidebar.category.Best Practices": {
+    "message": "最佳实践",
+    "description": "侧边栏教程中的最佳实践类别标签"
+  },
+  "sidebar.tutorialSidebar.category.Best Practices.link.generated-index.description": {
+    "message": "在实际项目中应用Go-Sail",
+    "description": "侧边栏教程中的最佳实践类别标签的索引页面描述"
+  }
+}

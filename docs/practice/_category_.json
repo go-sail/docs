@@ -1,6 +1,6 @@
 {
   "label": "Best Practices",
-  "position": 4,
+  "position": 5,
   "link": {
     "type": "generated-index",
     "description": "Apply Go-Sail in real projects."

@@ -1,0 +1,38 @@
+{
+  "version.label": {
+    "message": "次へ",
+    "description": "現在のバージョンのラベル"
+  },
+  "sidebar.tutorialSidebar.category.Concepts": {
+    "message": "コンセプト",
+    "description": "サイドバーのチュートリアルにあるコンセプトカテゴリーのラベル"
+  },
+  "sidebar.tutorialSidebar.category.Concepts.link.generated-index.description": {
+    "message": "Go-Sailのコアコンセプト",
+    "description": "サイドバーのチュートリアルにあるコンセプトカテゴリーのインデックスページの説明"
+  },
+  "sidebar.tutorialSidebar.category.Examples": {
+    "message": "使用例",
+    "description": "サイドバーのチュートリアルにある使用例カテゴリーのラベル"
+  },
+  "sidebar.tutorialSidebar.category.Examples.link.generated-index.description": {
+    "message": "Go-Sailのさまざまな使用例",
+    "description": "サイドバーのチュートリアルにある使用例カテゴリーのインデックスページの説明"
+  },
+  "sidebar.tutorialSidebar.category.Advanced": {
+    "message": "高度な使用法",
+    "description": "サイドバーのチュートリアルにある高度な使用法カテゴリーのラベル"
+  },
+  "sidebar.tutorialSidebar.category.Advanced.link.generated-index.description": {
+    "message": "高度なチュートリアルと使用例",
+    "description": "サイドバーのチュートリアルにある高度な使用法カテゴリーのインデックスページの説明"
+  },
+  "sidebar.tutorialSidebar.category.Best Practices": {
+    "message": "ベストプラクティス",
+    "description": "サイドバーのチュートリアルにあるベストプラクティスカテゴリーのラベル"
+  },
+  "sidebar.tutorialSidebar.category.Best Practices.link.generated-index.description": {
+    "message": "実際のプロジェクトでGo-Sailを適用する方法",
+    "description": "サイドバーのチュートリアルにあるベストプラクティスカテゴリーのインデックスページの説明"
+  }
+}

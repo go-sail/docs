@@ -31,7 +31,7 @@
     "message": "Best Practices",
     "description": "The label for category Best Practices in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.最佳实践.link.generated-index.description": {
+  "sidebar.tutorialSidebar.category.Best Practices.link.generated-index.description": {
     "message": "Apply Go-Sail to real projects.",
     "description": "The generated-index page description for category Best Practices in sidebar tutorialSidebar"
   }
