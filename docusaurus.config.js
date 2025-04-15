@@ -212,12 +212,12 @@ const config = {
       },
       algolia: {
         // The application ID provided by Algolia
-        appId: 'EJ7ONRKD8Y',
+        appId: '9D4NKKWKK2',
   
         // Public API key: it is safe to commit it
-        apiKey: 'c372d3e28150ce1a956e6a0c469cf265',
+        apiKey: '95220e8057af674b97978dd87cf406bb',
   
-        indexName: 'go_sail_dev_ej7onrkd8y_pages',
+        indexName: 'go-sail',
   
         // Optional: see doc section below
         contextualSearch: true,
