@@ -127,7 +127,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/logo.png',
+      image: 'img/og-en-US.png',
       navbar: {
         title: 'Go-Sail',
         logo: {
@@ -168,7 +168,7 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Overview',
+                label: 'Getting Started',
                 to: '/docs/overview',
               },
             ],
@@ -185,21 +185,67 @@ const config = {
               //   href: 'https://discordapp.com/invite/docusaurus',
               // },
               {
+                label: 'GitHub',
+                href: 'https://github.com/keepchen/go-sail',
+              },
+              {
                 label: 'Twitter',
                 href: 'https://twitter.com/wowgogoing',
               },
             ],
           },
+          // {
+          //   title: 'More',
+          //   items: [
+          //     // {
+          //     //   label: 'Blog',
+          //     //   to: '/blog',
+          //     // },
+          //     {
+          //       label: 'GitHub',
+          //       href: 'https://github.com/keepchen/go-sail',
+          //     },
+          //   ],
+          // },
           {
-            title: 'More',
+            title: 'Usecase',
             items: [
               // {
               //   label: 'Blog',
               //   to: '/blog',
               // },
               {
-                label: 'GitHub',
-                href: 'https://github.com/keepchen/go-sail',
+                label: 'StarDots',
+                href: 'https://stardots.io',
+              },
+              {
+                label: 'PiggyPiggy',
+                href: 'https://t.me/PiggyPiggyofficialbot',
+              },
+              {
+                label: 'FantaGoal',
+                href: 'https://fantagoal.io',
+              },
+              {
+                label: 'Pikaster',
+                href: 'https://pikaster.com',
+              },
+              {
+                label: 'Wingoal',
+                href: 'https://wingoal.io',
+              },
+            ],
+          },
+          {
+            title: 'Sponors',
+            items: [
+              {
+                label: 'Temp Mail',
+                href: 'https://tempmail100.com',
+              },
+              {
+                label: 'StarDots',
+                href: 'https://stardots.io',
               },
             ],
           },

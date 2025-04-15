@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
+import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/zh-CN/HomepageFeatures';
@@ -44,15 +45,19 @@ function HomepageHeader() {
 }
 
 export default function Home() {
-  // const {siteConfig} = useDocusaurusContext();
   return (
-    <Layout
-      title={`欢迎`}
-      description="Go-Sail是用Go语言实现的轻量的渐进式Web框架。">
-      <HomepageHeader />
-      <main>
-        <HomepageFeatures />
-      </main>
-    </Layout>
+    <>
+      <Head>
+        <meta property="og:image" content="img/og-zh-CN.png" />
+      </Head>
+      <Layout
+        title={`欢迎`}
+        description="Go-Sail是用Go语言实现的轻量的渐进式Web框架。">
+        <HomepageHeader />
+        <main>
+          <HomepageFeatures />
+        </main>
+      </Layout>
+    </>
   );
 }

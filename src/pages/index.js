@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
+import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/zh-CN/HomepageFeatures';
@@ -43,16 +44,35 @@ function HomepageHeader() {
   );
 }
 
+const locales = {
+  'en-US': {
+    ogImage: 'img/og-en-US.png',
+  },
+  'zh-CN': {
+    ogImage: 'img/og-zh-CN.png',
+  },
+  'ja-JP': {
+    ogImage: 'img/og-ja-JP.png',
+  },
+}
+
 export default function Home() {
-  // const {siteConfig} = useDocusaurusContext();
+  const { i18n, siteConfig } = useDocusaurusContext();
+  const currentLocale = i18n.currentLocale;
+  
   return (
-    <Layout
-      title={`Welcome`}
-      description="Go-Sail is a lightweight progressive Golang Web framework.">
-      <HomepageHeader />
-      <main>
-        <HomepageFeatures />
-      </main>
-    </Layout>
+    <>
+      <Head>
+        <meta property="og:image" content={locales[currentLocale].ogImage} />
+      </Head>
+      <Layout
+        title={`Welcome`}
+        description="Go-Sail is a lightweight progressive Golang Web framework.">
+        <HomepageHeader />
+        <main>
+          <HomepageFeatures />
+        </main>
+      </Layout>
+    </>
   );
 }

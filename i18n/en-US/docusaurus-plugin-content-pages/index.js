@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
+import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/en-US/HomepageFeatures';
@@ -46,13 +47,18 @@ function HomepageHeader() {
 export default function Home() {
   // const {siteConfig} = useDocusaurusContext();
   return (
-    <Layout
-      title={`Welcome`}
-      description="Go-Sail is a lightweight progressive Golang Web framework.">
-      <HomepageHeader />
-      <main>
-        <HomepageFeatures />
-      </main>
-    </Layout>
+    <>
+      <Head>
+        <meta property="og:image" content="img/og-en-US.png" />
+      </Head>
+      <Layout
+        title={`Welcome`}
+        description="Go-Sail is a lightweight progressive Golang Web framework.">
+        <HomepageHeader />
+        <main>
+          <HomepageFeatures />
+        </main>
+      </Layout>
+    </>
   );
 }
