@@ -45,11 +45,12 @@ function HomepageHeader() {
 }
 
 export default function Home() {
-  // const {siteConfig} = useDocusaurusContext();
+  const {siteConfig, i18n} = useDocusaurusContext();
+  const currentLocale = i18n.currentLocale;
   return (
     <>
       <Head>
-        <meta property="og:image" content="img/og-en-US.png" />
+        <meta property="og:image" content={ `${siteConfig.url}/${currentLocale}/img/og-${currentLocale}.png` } />
       </Head>
       <Layout
         title={`Welcome`}
