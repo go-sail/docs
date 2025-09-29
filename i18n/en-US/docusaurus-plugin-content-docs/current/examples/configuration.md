@@ -646,4 +646,57 @@ Some third-party libraries support expanding anonymous fields by default, such a
 ### Suggestion  
 :::tip  
 To avoid field ambiguity or conflicts, we recommend that developers use named composition to organize configuration structures.  
+:::  
+
+## Scaffold  
+Since `v3.0.6_rc5`, Go-Sail provides configuration reading scaffolding out of the box.  
+As shown here, you can easily obtain configuration information in different ways. It also supports configuration monitoring.    
+### From File    
+```go title="main.go" showLineNumbers  
+parseFn := func(content []byte, viaWatch bool){
+    fmt.Println("config content: ", string(content))
+    if viaWatch {
+        //reload config...
+    }
+}
+filename := "path/to/go-sail.config.yaml"
+
+sail.Config(true, parseFn).ViaFile(filename).Parse(parseFn)
+```  
+:::tip  
+The monitoring of file mode is based on the modification time of the file.  
 :::
+
+### From Etcd  
+```go title="main.go" showLineNumbers  
+parseFn := func(content []byte, viaWatch bool){
+    fmt.Println("config content: ", string(content))
+    if viaWatch {
+        //reload config...
+    }
+}
+etcdConf := etcd.Conf{
+	Endpoints: []string{""},
+	Username: "",
+	Password: "",
+}
+key := "go-sail.config.yaml"
+
+sail.Config(true, parseFn).ViaEtcd(etcdConf, key).Parse(parseFn)
+```  
+### From Nacos  
+```go title="main.go" showLineNumbers  
+parseFn := func(content []byte, viaWatch bool){
+    fmt.Println("config content: ", string(content))
+    if viaWatch {
+        //reload config...
+    }
+}
+
+endpoints := "endpoint1,endpoint2"
+namspaceID := ""
+groupName := ""
+dataID := "go-sail.config.yaml"
+
+sail.Config(true, parseFn).ViaNacos(endpoints, namespaceID, groupName, dataID).Parse(parseFn)
+```

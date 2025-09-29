@@ -646,4 +646,57 @@ func main() {
 ### 提案  
 :::tip  
 フィールドの曖昧さや競合を避けるため、開発者には名前付き合成を使用して設定構造を整理することをお勧めします。  
+:::  
+
+## スキャフォールディング  
+`v3.0.6_rc5`以降、Go-Sailは設定読み取りのためのスキャフォールディング機能を標準で提供しています。  
+ここで示すように、さまざまな方法で簡単に設定情報を取得でき、さらに設定の監視にも対応しています。  
+### ファイルから取得
+```go title="main.go" showLineNumbers  
+parseFn := func(content []byte, viaWatch bool){
+    fmt.Println("config content: ", string(content))
+    if viaWatch {
+        //reload config...
+    }
+}
+filename := "path/to/go-sail.config.yaml"
+
+sail.Config(true, parseFn).ViaFile(filename).Parse(parseFn)
+```  
+:::tip  
+ファイルモードでの監視は、ファイルの更新時刻（mtime）に基づいています。  
 :::
+
+### Etcdから取得
+```go title="main.go" showLineNumbers  
+parseFn := func(content []byte, viaWatch bool){
+    fmt.Println("config content: ", string(content))
+    if viaWatch {
+        //reload config...
+    }
+}
+etcdConf := etcd.Conf{
+	Endpoints: []string{""},
+	Username: "",
+	Password: "",
+}
+key := "go-sail.config.yaml"
+
+sail.Config(true, parseFn).ViaEtcd(etcdConf, key).Parse(parseFn)
+```  
+### Nacosから取得
+```go title="main.go" showLineNumbers  
+parseFn := func(content []byte, viaWatch bool){
+    fmt.Println("config content: ", string(content))
+    if viaWatch {
+        //reload config...
+    }
+}
+
+endpoints := "endpoint1,endpoint2"
+namspaceID := ""
+groupName := ""
+dataID := "go-sail.config.yaml"
+
+sail.Config(true, parseFn).ViaNacos(endpoints, namespaceID, groupName, dataID).Parse(parseFn)
+```

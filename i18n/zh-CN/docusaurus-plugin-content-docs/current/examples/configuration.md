@@ -646,4 +646,57 @@ func main() {
 ### 提议  
 :::tip  
 为避免字段歧义或冲突，我们建议开发者使用具名组合的方式来组织配置结构。  
+:::  
+
+## 脚手架  
+自 `v3.0.6_rc5` 起，Go-Sail 内置了配置读取的脚手架。  
+如下面所示，你可以通过多种方式轻松获取配置信息，并且还支持配置变更监听。  
+### 从文件读取
+```go title="main.go" showLineNumbers  
+parseFn := func(content []byte, viaWatch bool){
+    fmt.Println("config content: ", string(content))
+    if viaWatch {
+        //reload config...
+    }
+}
+filename := "path/to/go-sail.config.yaml"
+
+sail.Config(true, parseFn).ViaFile(filename).Parse(parseFn)
+```  
+:::tip  
+文件模式的监控是基于文件的修改时间进行的。
 :::
+
+### 从 Etcd 读取
+```go title="main.go" showLineNumbers  
+parseFn := func(content []byte, viaWatch bool){
+    fmt.Println("config content: ", string(content))
+    if viaWatch {
+        //reload config...
+    }
+}
+etcdConf := etcd.Conf{
+	Endpoints: []string{""},
+	Username: "",
+	Password: "",
+}
+key := "go-sail.config.yaml"
+
+sail.Config(true, parseFn).ViaEtcd(etcdConf, key).Parse(parseFn)
+```  
+### 从 Nacos 读取
+```go title="main.go" showLineNumbers  
+parseFn := func(content []byte, viaWatch bool){
+    fmt.Println("config content: ", string(content))
+    if viaWatch {
+        //reload config...
+    }
+}
+
+endpoints := "endpoint1,endpoint2"
+namspaceID := ""
+groupName := ""
+dataID := "go-sail.config.yaml"
+
+sail.Config(true, parseFn).ViaNacos(endpoints, namespaceID, groupName, dataID).Parse(parseFn)
+```
