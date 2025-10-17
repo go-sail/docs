@@ -16,7 +16,7 @@ function HomepageHeader() {
         <Heading as="h1" className="hero__title">
           {siteConfig.title}
         </Heading>
-        <p className="hero__subtitle">A lightweight progressive Golang Web framework.</p>
+        <p className="hero__subtitle">A lightweight progressive Web framework written in Go.</p>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
@@ -67,7 +67,7 @@ export default function Home() {
       </Head>
       <Layout
         title={`Welcome`}
-        description="Go-Sail is a lightweight progressive Golang Web framework.">
+        description="Go-Sail is a lightweight progressive Web framework written in Go.">
         <HomepageHeader />
         <main>
           <HomepageFeatures />

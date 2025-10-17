@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Getting Started
 
-Go-Sail is a lightweight progressive golang web framework. It's extremely simple to get started - you only need a few lines of code to get up and running. Let's begin.
+Go-Sail is a lightweight progressive web framework written in Go. It's extremely simple to get started - you only need a few lines of code to get up and running. Let's begin.
 
 ## Getting Started
 
