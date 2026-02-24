@@ -225,6 +225,19 @@ const config = {
             ],
           },
           {
+            title: 'Live demo',
+            items: [
+              // {
+              //   label: 'Blog',
+              //   to: '/blog',
+              // },
+              {
+                label: 'nav.go-sail.dev',
+                href: 'https://nav.go-sail.dev',
+              },
+            ],
+          },
+          {
             title: 'Sponors',
             items: [
               {

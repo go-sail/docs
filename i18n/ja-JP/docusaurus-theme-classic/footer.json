@@ -15,6 +15,10 @@
     "message": "使用例",
     "description": "The title of the footer links column with title=Usecase in the footer"
   },
+  "link.title.Live demo": {
+    "message": "ライブデモ",
+    "description": "The title of the footer links column with title=Live demo in the footer"
+  },
   "link.title.Sponors": {
     "message": "スポンサー",
     "description": "The title of the footer links column with title=Sponors in the footer"

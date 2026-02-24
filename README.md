@@ -15,28 +15,29 @@ npm start
 npm run build
 
 # 启动特定语言的开发服务器
-npm start -- --locale zh-Hans  # 中文
-npm start -- --locale en      # 英文
+npm start -- --locale zh-CN  # 中文
+npm start -- --locale ja-JP  # 日语
+npm start -- --locale en     # 英文
 ```
 
 ## 📚 多语言支持
 
 本站点支持以下语言：
-- 简体中文 (zh-Hans) - 默认语言
+- 简体中文 (zh-CN) - 默认语言
 - 英文 (en)
 
 ### 添加新翻译
 
 1. 生成翻译文件：
 ```bash
-npm run write-translations -- --locale zh-Hans
+npm run write-translations -- --locale zh-CN
 ```
 
 2. 翻译文件结构：
 ```
 website
 ├── i18n
-│   └── zh-Hans          # 语言代码
+│   └── zh-CN          # 语言代码
 │       ├── code.json    # 界面文本翻译
 │       └── docusaurus-plugin-content-docs
 │           └── current  # 当前版本文档翻译
@@ -51,8 +52,8 @@ website
 ### 翻译检查
 
 确保所有文档都有对应的翻译版本：
-1. 检查 `docs/` 目录下的所有文档是否都在 `i18n/zh-Hans/docusaurus-plugin-content-docs/current/` 中有对应翻译
-2. 检查 `blog/` 目录下的所有文章是否都在 `i18n/zh-Hans/docusaurus-plugin-content-blog/` 中有对应翻译
+1. 检查 `docs/` 目录下的所有文档是否都在 `i18n/zh-CN/docusaurus-plugin-content-docs/current/` 中有对应翻译
+2. 检查 `blog/` 目录下的所有文章是否都在 `i18n/zh-CN/docusaurus-plugin-content-blog/` 中有对应翻译
 
 ## 📖 版本控制
 
@@ -118,7 +119,7 @@ website
 ```bash
 # 开发
 npm start                    # 启动开发服务器
-npm start -- --locale zh-Hans # 启动中文开发服务器
+npm start -- --locale zh-CN # 启动中文开发服务器
 
 # 文档
 npm run write-translations   # 生成翻译文件
