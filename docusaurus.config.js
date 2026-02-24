@@ -215,24 +215,12 @@ const config = {
               //   to: '/blog',
               // },
               {
+                label: 'Sendflare',
+                href: 'https://sendflare.com',
+              },
+              {
                 label: 'StarDots',
                 href: 'https://stardots.io',
-              },
-              {
-                label: 'PiggyPiggy',
-                href: 'https://t.me/PiggyPiggyofficialbot',
-              },
-              {
-                label: 'FantaGoal',
-                href: 'https://fantagoal.io',
-              },
-              {
-                label: 'Pikaster',
-                href: 'https://pikaster.com',
-              },
-              {
-                label: 'Wingoal',
-                href: 'https://wingoal.io',
               },
             ],
           },

@@ -8,4 +8,5 @@ This chapter will introduce the practical application of Go-Sail in projects.
 After reading the previous documentation, we have gained a comprehensive understanding of using Go-Sail. Now it's time to apply Go-Sail to actual projects. Let's get started!    
 
 ## Project Examples  
-- [examples](https://github.com/go-sail/nav-server)  
+- [nav-server](https://github.com/go-sail/nav-server)  
+- [nav-ui](https://github.com/go-sail/nav-ui)  

@@ -8,4 +8,5 @@ sidebar_position: 1
 前のドキュメントを読んだ後、Go-Sailの使用について包括的な理解が得られました。実際のプロジェクトにGo-Sailを適用する時が来ました。さあ、始めましょう！  
 
 ## プロジェクト例  
-- [examples](https://github.com/go-sail/nav-server)  
+- [nav-server](https://github.com/go-sail/nav-server)  
+- [nav-ui](https://github.com/go-sail/nav-ui)  
