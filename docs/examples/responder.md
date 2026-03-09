@@ -153,14 +153,11 @@ The responder currently provides three different wrappers to suit different scen
 
 We assume the following data structure definition:  
 ```go title="main.go" showLineNumbers  
-import "github.com/keepchen/go-sail/http/pojo/dto"
+import "github.com/keepchen/go-sail/v3/http/pojo/dto"
 
 type UserInfo struct {
     dto.Base
-    Data struct {
-        Nickname string `json:"nickname" validate:"required" format:"string"`
-        Age      number `json:"nickname" validate:"required" format:"number"`
-    } `json:"data" validate:"required" format:"object"`
+    Data SimpleUser `json:"data" validate:"required" format:"object"`
 }
 
 func (v UserInfo) GetData() interface{} {
@@ -177,21 +174,21 @@ type SimpleUser struct {
 The error code parameter type of the `Builder` wrapper needs to be Go-Sail's `constants.ICodeType`, and the response data type needs to be `dto.IResponse`.  
 ```go title="main.go" showLineNumbers  
 var userInfo UserInfo
-sail.Response(c).Builder(constants.XX, resp).Send()
+sail.Response(c).Builder(constants.XX, userInfo).Send()
 ```  
 
 ### Wrap  
 The error code parameter type of the `Wrap` wrapper needs to be Go-Sail's `constants.ICodeType`, and the response data type needs to be `interface`.  
 ```go title="main.go" showLineNumbers  
 var userInfo SimpleUser
-sail.Response(c).Wrap(constants.XX, resp).Send()
+sail.Response(c).Wrap(constants.XX, userInfo).Send()
 ```  
 
 ### Bundle  
 The error code parameter type of the `Bundle` wrapper needs to be `int`, and the response data type needs to be `interface`.  In terms of ease of use, `Bundle` is the easiest.  
 ```go title="main.go" showLineNumbers  
 var userInfo SimpleUser
-sail.Response(c).Wrap(200, resp).Send()
+sail.Response(c).Bundle(200, userInfo).Send()
 ```  
 
 These three wrappers appear to represent different response data structures and error code calls.   
@@ -203,14 +200,14 @@ There are currently several syntax sugars available for sending responses.
 ### Send  
 ```go title="main.go" showLineNumbers  
 var userInfo SimpleUser
-sail.Response(c).Wrap(200, resp).Send()
+sail.Response(c).Wrap(200, userInfo).Send()
 ```  
 
 ### Data  
 This function returns success data.  
 ```go title="main.go" showLineNumbers  
 var userInfo SimpleUser
-sail.Response(c).Data(resp)
+sail.Response(c).Data(userInfo)
 ```  
 
 ### Success  

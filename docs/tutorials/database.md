@@ -74,16 +74,16 @@ var (
     }
     registerRoutes = func(ginEngine *gin.Engine) {
         ginEngine.POST("/login", func(c *gin.Context){
-        var loginRequest LoginRequest
-        c.ShouldBind(&loginRequest)
+            var loginRequest LoginRequest
+            c.ShouldBind(&loginRequest)
 
-        if loginRequest.Username != "go-sail" || loginRequest.Password != "password" {
-            sail.Response(c).Failure("login failed, username or password not match!")
-            return
-        }
+            if loginRequest.Username != "go-sail" || loginRequest.Password != "password" {
+                sail.Response(c).Failure("login failed, username or password not match!")
+                return
+            }
 
-        token := "this-is-a-valid-token"
-        sail.Response(c).Data(token)
+            token := "this-is-a-valid-token"
+            sail.Response(c).Data(token)
         })
         userGroup := ginEngine.Group("/user").Use(ValidateToken())
         {
@@ -333,16 +333,16 @@ var (
     }
     registerRoutes = func(ginEngine *gin.Engine) {
         ginEngine.POST("/login", func(c *gin.Context){
-        var loginRequest LoginRequest
-        c.ShouldBind(&loginRequest)
+            var loginRequest LoginRequest
+            c.ShouldBind(&loginRequest)
 
-        if loginRequest.Username != "go-sail" || loginRequest.Password != "password" {
-            sail.Response(c).Failure("login failed, username or password not match!")
-            return
-        }
+            if loginRequest.Username != "go-sail" || loginRequest.Password != "password" {
+                sail.Response(c).Failure("login failed, username or password not match!")
+                return
+            }
 
-        token := "this-is-a-valid-token"
-        sail.Response(c).Data(token)
+            token := "this-is-a-valid-token"
+            sail.Response(c).Data(token)
         })
         userGroup := ginEngine.Group("/user").Use(ValidateToken())
         {
@@ -411,16 +411,16 @@ var (
     }
     registerRoutes = func(ginEngine *gin.Engine) {
         ginEngine.POST("/login", func(c *gin.Context){
-        var loginRequest LoginRequest
-        c.ShouldBind(&loginRequest)
+            var loginRequest LoginRequest
+            c.ShouldBind(&loginRequest)
 
-        if loginRequest.Username != "go-sail" || loginRequest.Password != "password" {
-            sail.Response(c).Failure("login failed, username or password not match!")
-            return
-        }
+            if loginRequest.Username != "go-sail" || loginRequest.Password != "password" {
+                sail.Response(c).Failure("login failed, username or password not match!")
+                return
+            }
 
-        token := "this-is-a-valid-token"
-        sail.Response(c).Data(token)
+            token := "this-is-a-valid-token"
+            sail.Response(c).Data(token)
         })
         userGroup := ginEngine.Group("/user").Use(ValidateToken())
         {
@@ -510,16 +510,16 @@ var (
     }
     registerRoutes = func(ginEngine *gin.Engine) {
         ginEngine.POST("/login", func(c *gin.Context){
-        var loginRequest LoginRequest
-        c.ShouldBind(&loginRequest)
+            var loginRequest LoginRequest
+            c.ShouldBind(&loginRequest)
 
-        if loginRequest.Username != "go-sail" || loginRequest.Password != "password" {
-            sail.Response(c).Failure("login failed, username or password not match!")
-            return
-        }
+            if loginRequest.Username != "go-sail" || loginRequest.Password != "password" {
+                sail.Response(c).Failure("login failed, username or password not match!")
+                return
+            }
 
-        token := "this-is-a-valid-token"
-        sail.Response(c).Data(token)
+            token := "this-is-a-valid-token"
+            sail.Response(c).Data(token)
         })
         userGroup := ginEngine.Group("/user").Use(ValidateToken())
         {
