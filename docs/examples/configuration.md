@@ -661,7 +661,7 @@ parseFn := func(content []byte, viaWatch bool){
 }
 filename := "path/to/go-sail.config.yaml"
 
-sail.Config(true, parseFn).ViaFile(filename).Parse(parseFn)
+sail.Config(parseFn).ViaFile(filename).Parse(parseFn)
 ```  
 :::tip  
 The monitoring of file mode is based on the modification time of the file.  
@@ -682,7 +682,7 @@ etcdConf := etcd.Conf{
 }
 key := "go-sail.config.yaml"
 
-sail.Config(true, parseFn).ViaEtcd(etcdConf, key).Parse(parseFn)
+sail.Config(parseFn).ViaEtcd(etcdConf, key).Parse(parseFn)
 ```  
 ### From Nacos  
 ```go title="main.go" showLineNumbers  
@@ -698,5 +698,5 @@ namspaceID := ""
 groupName := ""
 dataID := "go-sail.config.yaml"
 
-sail.Config(true, parseFn).ViaNacos(endpoints, namespaceID, groupName, dataID).Parse(parseFn)
+sail.Config(parseFn).ViaNacos(endpoints, namespaceID, groupName, dataID).Parse(parseFn)
 ```

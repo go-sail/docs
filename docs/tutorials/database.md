@@ -285,7 +285,7 @@ sail.GetDBW().
 ...
 ```  
 
-## Baseline Time  
+## Timezone Configuration  
 Base time is a crucial metric in database systems, especially in complex environments such as distributed systems or global multi-datacenter environments, where ensuring consistent time across all systems is paramount. When your services operate in different time zones and require consistent behavior in retrieving the "current time," you need to specify the `NowFunc` setting in the database configuration.  
 
 Taking a global application as an example, in order to maintain consistency, the business side may need to display the same time display to users all over the world. Therefore, we need to agree on the same time function and the same time zone to ensure the correct representation of data in subsequent output and transformation.  
